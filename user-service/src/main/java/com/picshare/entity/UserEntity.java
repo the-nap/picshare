@@ -30,9 +30,6 @@ public class UserEntity{
   @Column(unique = true, nullable = false)
   private String username;
 
-  @Column(nullable = false)
-  private String password;
-  
   @Column(unique = true, nullable = false)
   private String email;
 
@@ -42,5 +39,8 @@ public class UserEntity{
 
   @UpdateTimestamp
   private Date updateDate;
+
+  @Column(nullable = false)
+  private Date lastAccess;
 
 }
