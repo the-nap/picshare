@@ -1,4 +1,4 @@
-package com.example.storage_service.service;
+package com.example.storage_service.service.exceptions;
 
 public class StorageFileNotFoundException extends StorageException{
 
