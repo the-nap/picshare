@@ -2,4 +2,4 @@ spring:
   application:
     name: Storage Service
     storage:
-      media-root: /data/media
+      mediaroot: /data/media
