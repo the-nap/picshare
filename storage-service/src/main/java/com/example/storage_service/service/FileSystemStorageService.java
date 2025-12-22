@@ -18,10 +18,7 @@ import com.example.storage_service.client.StorageClient;
 import com.example.storage_service.service.exceptions.StorageException;
 import com.example.storage_service.service.util.WebpManager;
 
-import lombok.AllArgsConstructor;
-
 @Service
-@AllArgsConstructor
 public class FileSystemStorageService implements StorageService{
 
   private final StorageClient client;
