@@ -3,6 +3,7 @@ package com.picshare.post_service.entity;
 import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,7 +32,7 @@ public class PostEntity {
 
   @Column
   @NonNull
-  private Boolean mediaPending;
+  private Boolean mediaPending = true;
 
   @CreationTimestamp
   @Column(updatable = false)

@@ -14,6 +14,7 @@ public class StorageControllerAdvice {
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   String GenericHandler(StorageException se) {
     return se.getMessage();
+  }
 
   
 }
