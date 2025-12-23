@@ -53,10 +53,7 @@ public class WebpManager {
   }
 
   private static ImageWriter getWriter() {
-    Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("webp");
-    if(!writers.hasNext())
-      throw new IllegalStateException("No WebP ImageWriter");
-    return writers.next();
+    return ImageIO.getImageWritersByFormatName("webp").next();
   }
 
 

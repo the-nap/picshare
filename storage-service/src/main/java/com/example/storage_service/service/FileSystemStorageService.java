@@ -31,14 +31,13 @@ public class FileSystemStorageService implements StorageService{
   }
 
   @Override
-  public void store(MultipartFile file, String filename) {
+  public void store(InputStream data, String filename) {
       Path destination = createDirectory(filename);
       Path[] paths = getPaths(destination);
-      try(InputStream inputStream = file.getInputStream();
-          OutputStream outputStreamMedia = Files.newOutputStream(paths[0], StandardOpenOption.CREATE);
+      try(OutputStream outputStreamMedia = Files.newOutputStream(paths[0], StandardOpenOption.CREATE);
           OutputStream outputStreamThumbnail = Files.newOutputStream(paths[1], StandardOpenOption.CREATE)){
 
-        WebpManager.manage(inputStream, outputStreamMedia, outputStreamThumbnail);
+        WebpManager.manage(data, outputStreamMedia, outputStreamThumbnail);
 
           } catch (IOException e) {
             throw new StorageException("Error while writing file", e);
