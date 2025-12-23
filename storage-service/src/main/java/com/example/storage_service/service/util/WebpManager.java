@@ -14,13 +14,19 @@ import javax.imageio.stream.ImageOutputStream;
 
 import org.imgscalr.Scalr;
 
+import com.example.storage_service.service.exceptions.StorageException;
+
 public class WebpManager {
 
   public static void manage(InputStream in, OutputStream outMedia, OutputStream outThumbnail) throws IOException{
     BufferedImage tempImage = ImageIO.read(in);
+    if(tempImage == null)
+      throw new StorageException("Image not available");
     saveToDisk(tempImage, outMedia, 0.85f);
-    tempImage = resize(tempImage, 300);
-    saveToDisk(tempImage, outThumbnail, 0.45f);
+    tempImage.flush();
+    BufferedImage thumbnail = resize(tempImage, 300);
+    saveToDisk(thumbnail, outThumbnail, 0.45f);
+    thumbnail.flush();
   }
 
 
@@ -38,7 +44,7 @@ public class WebpManager {
   private static void writeToDisk(OutputStream out, BufferedImage image, ImageWriter writer, ImageWriteParam param)
       throws IOException {
       try(ImageOutputStream ios = ImageIO.createImageOutputStream(out)) {
-        writer.setOutput(out);
+        writer.setOutput(ios);
         writer.write(null, new IIOImage(image, null, null), param);
       } finally {
         writer.dispose();
@@ -47,13 +53,18 @@ public class WebpManager {
 
   private static ImageWriteParam setQuality(ImageWriter writer, float quality) {
     ImageWriteParam ret = writer.getDefaultWriteParam();
+    if(!ret.canWriteCompressed())
+      throw new StorageException("Writer not valid");
     ret.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
     ret.setCompressionQuality(quality);
     return ret;
   }
 
   private static ImageWriter getWriter() {
-    return ImageIO.getImageWritersByFormatName("webp").next();
+    Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("webp");
+    if(!writers.hasNext())
+      throw new StorageException("Writer not found");
+    return writers.next();
   }
 
 
