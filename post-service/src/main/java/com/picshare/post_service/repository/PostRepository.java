@@ -10,8 +10,8 @@ import com.picshare.post_service.entity.PostEntity;
 @Repository
 public interface PostRepository extends JpaRepository<PostEntity, Long> {
 
-  PostEntity findByPostId(long id);
+  PostEntity findByPostId(Long id);
 
-  List<PostEntity> findByUserId(long id);
+  List<PostEntity> findByUserId(Long id);
 
 }
