@@ -60,9 +60,36 @@ services:
         - picshare_network
 
         
+  post-service:
+    image: post-service:latest
+    build:
+      context: ./post-service/
+    env_file: "./env/post.env"
+    depends_on:
+      post-db:
+        condition: service_healthy
+    networks:
+        - picshare_network
+
+  post-db:
+    image: postgres:latest
+    env_file: ./env/post.env
+    volumes: 
+    - post-service-data:/var/lib/postgresql
+    expose:
+      - "5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+        - picshare_network
+
 volumes:
   auth-service-data:
   user-service-data:
+  post-service-data:
 
 
 networks:
