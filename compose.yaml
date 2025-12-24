@@ -2,6 +2,9 @@ services:
   auth-service:
     image: quay.io/keycloak/keycloak:latest
     env_file: "./env/auth.env"
+    depends_on:
+      auth-db:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:7080/health/ready"]
       interval: 15s
@@ -21,7 +24,11 @@ services:
     env_file: "./env/auth.env"
     expose:
       - "5432"
-
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     networks:
         - picshare_network
 
@@ -30,21 +37,22 @@ services:
     image: user-service:latest
     build:
       context: ./user-service/
-      env_file: "./env/user.env"
+    env_file: "./env/user.env"
     depends_on:
       user-db:
         condition: service_healthy
-    environment:
     networks:
         - picshare_network
 
   user-db:
     image: postgres:latest
     env_file: ./env/user.env
-    voulumes: 
+    volumes: 
     - user-service-data:/var/lib/postgresql
+    expose:
+      - "5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
       timeout: 5s
       retries: 5
