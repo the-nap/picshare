@@ -17,7 +17,7 @@ services:
   auth-db:
     image: postgres:latest
     volumes:
-      - auth-service-data:/var/lib/postgresql
+      - auth-service-data:/var/lib/postgresql # good for postgres 18+
     env_file: "./env/auth.env"
     expose:
       - "5432"
@@ -25,8 +25,36 @@ services:
     networks:
         - picshare_network
 
+
+  user-service:
+    image: user-service:latest
+    build:
+      context: ./user-service/
+      env_file: "./env/user.env"
+    depends_on:
+      user-db:
+        condition: service_healthy
+    environment:
+    networks:
+        - picshare_network
+
+  user-db:
+    image: postgres:latest
+    env_file: ./env/user.env
+    voulumes: 
+    - user-service-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+        - picshare_network
+
+        
 volumes:
   auth-service-data:
+  user-service-data:
 
 
 networks:
