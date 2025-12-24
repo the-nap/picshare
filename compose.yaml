@@ -86,6 +86,14 @@ services:
     networks:
         - picshare_network
 
+
+  storage-service:
+    image: storage-service:latest
+    build:
+      context: ./storage-service/
+    networks:
+        - picshare_network
+
 volumes:
   auth-service-data:
   user-service-data:
