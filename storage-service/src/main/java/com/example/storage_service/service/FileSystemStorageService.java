@@ -7,20 +7,24 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.example.storage_service.client.StorageClient;
 import com.example.storage_service.service.exceptions.StorageException;
+import com.example.storage_service.service.exceptions.StorageFileNotFoundException;
 import com.example.storage_service.service.util.WebpManager;
 
 @Service
 public class FileSystemStorageService implements StorageService{
 
+  private static final String MEDIA = "media";
+  private static final String PREVIEW = "preview";
   private final StorageClient client;
   private final Path mediaRoot;
 
@@ -47,8 +51,8 @@ public class FileSystemStorageService implements StorageService{
 
   private Path[] getPaths(Path destination) {
       Path[] paths = new Path[2];
-      paths[0] = destination.resolve("media");
-      paths[1] = destination.resolve("thumbnail");
+      paths[0] = destination.resolve(MEDIA);
+      paths[1] = destination.resolve(PREVIEW);
       return paths;
   }
 
@@ -63,21 +67,26 @@ public class FileSystemStorageService implements StorageService{
   }
 
   @Override
-  public Stream<Path> loadAll() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'loadAll'");
+  public Resource load(String filename) {
+    Path toRead = Path.of(mediaRoot.toString(), filename, MEDIA);
+    try {
+      return new UrlResource(toRead.toUri());
+    } catch (Exception e) {
+      throw new StorageFileNotFoundException("Impossible to read selected image");
+    }
   }
 
   @Override
-  public Path load(String filename) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'load'");
-  }
-
-  @Override
-  public Resource loadAsResource(String filename) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'loadAsResource'");
+  public Stream<Resource> loadThumbnail(List<String> filenames) {
+    return filenames.stream()
+      .map(name -> Path.of(mediaRoot.toString(), name, PREVIEW))
+      .map(path -> {
+        try {
+          return new UrlResource(path.toUri());
+        } catch (Exception e) {
+            throw new StorageFileNotFoundException("Impossible to read selected image");
+        }
+      });
   }
 
   @Override
