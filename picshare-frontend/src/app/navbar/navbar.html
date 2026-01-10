@@ -1,9 +1,11 @@
 <nav mat-tab-nav-bar [tabPanel]="tabPanel">
   @for (link of links; track link) {
+    <ng-template matTabContent>
     <a mat-tab-link
       routerLinkActive #rla="routerLinkActive"
       [active]="rla.isActive"
-      [routerLink]="link.route"> {{ link.label }} </a>
+      [routerLink]="link.route"> {{ link.label }}</a>
+    </ng-template>
   }
 </nav>
 <mat-tab-nav-panel #tabPanel>
