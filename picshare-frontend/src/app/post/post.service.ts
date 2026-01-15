@@ -1,0 +1,12 @@
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+
+@Injectable({providedIn: 'root'})
+export class PostService {
+  constructor(private http:HttpClient){}
+
+  getResource(id: string): Observable<Blob> {
+    return this.http.get('http://gateway:8080/image/' + id, { responseType: 'blob' });
+  }
+}
