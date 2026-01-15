@@ -2,13 +2,19 @@ import { Routes } from '@angular/router';
 import { Feed } from './feed/feed';
 import { Search } from './search/search';
 import { Profile } from './profile/profile';
+import { Home } from './home/home';
 
 export const routes: Routes = [
 
   {
     path: '',
-    redirectTo: 'feed',
+    redirectTo: '/home',
     pathMatch: 'full'
+  },
+  {
+    path: 'home',
+    title: 'Homepage',
+    component: Home,
   },
   {
     path: 'feed',
