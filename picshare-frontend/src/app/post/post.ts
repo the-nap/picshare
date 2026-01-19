@@ -14,6 +14,8 @@ export class Post {
   readonly resourceId = input.required<string>();
   service = inject(PostService);
 
-  resource = this.service.getResource(this.resourceId);
+  getResource() {
+    return this.service.getResource(this.resourceId());
+  }
 
 }
