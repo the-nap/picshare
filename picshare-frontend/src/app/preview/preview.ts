@@ -1,20 +1,18 @@
 import { Component, inject, input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card'
 import { NgOptimizedImage } from '@angular/common';
-import { PostService } from './post.service';
+import { PreviewService } from './preview.service';
 
 @Component({
-  selector: 'app-post',
+  selector: 'app-preview',
   imports: [MatCardModule, NgOptimizedImage],
-  templateUrl: './post.html',
-  styleUrl: './post.css',
+  templateUrl: './preview.html',
+  styleUrl: './preview.css',
 })
 
 export class Post {
-  username = "";
-  description = "";
   resourceId = input.required<string>();
-  service = inject(PostService);
+  service = inject(PreviewService);
 
   getResource() {
     return this.service.getResource(this.resourceId());
