@@ -1,1 +1,5 @@
-<app-gallery [postIds]="resourceIds$ | async"/>
+@if ( resourceIds$ | async; as resourceIds) {
+<app-gallery [postIds]="resourceIds"/>
+  } @else {
+  <mat-progress-spinner></mat-progress-spinner>
+  }
