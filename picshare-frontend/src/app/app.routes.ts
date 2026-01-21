@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { Feed } from './feed/feed';
-import { Search } from './search/search';
-import { Profile } from './profile/profile';
-import { Home } from './home/home';
+import { Feed } from './components/feed/feed';
+import { Search } from './components/search/search';
+import { User } from './components/user/user';
+import { Home } from './components/home/home';
 
 export const routes: Routes = [
 
@@ -29,6 +29,6 @@ export const routes: Routes = [
   {
     path: 'user',
     title: 'User Profile',
-    component: Profile,
+    component: User,
   }
 ];
