@@ -1,8 +1,8 @@
 <mat-card class="card" appearance="outlined">
   <mat-card-header>
     <div mat-card-avatar></div>
-    <mat-card-title>{{ username }}</mat-card-title>
+    <mat-card-title>{{ username$() }}</mat-card-title>
   </mat-card-header>
-  <img mat-card-image [src]="getResource()">
+  <img mat-card-image [ngSrc]="resource$()">
   <mat-card-content>
-    <p>{{ description }}</p>
+    <p>{{ description$() }}</p>

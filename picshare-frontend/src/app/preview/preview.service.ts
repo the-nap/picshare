@@ -6,7 +6,7 @@ import { environment } from "../../environments/environment";
 @Injectable({providedIn: 'root'})
 export class PreviewService {
 
-  apiUrl: string = `${environment.apiUrl}thumbnail/`;
+  apiUrl: string = environment.apiUrl + "thumbnail/";
 
   constructor(private http:HttpClient){}
 

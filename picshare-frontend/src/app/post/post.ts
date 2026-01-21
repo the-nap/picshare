@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card'
 import { NgOptimizedImage } from '@angular/common';
 import { PostService } from './post.service';
@@ -11,13 +11,12 @@ import { PostService } from './post.service';
 })
 
 export class Post {
-  username = "";
-  description = "";
   resourceId = input.required<string>();
   service = inject(PostService);
-
-  getResource() {
-    return this.service.getResource(this.resourceId());
-  }
-
+  resource$ = computed(() =>
+                      this.service.getResource(this.resourceId()));
+  username$ = computed(() =>
+                      this.service.getUsername(this.resourceId()));
+  description$ = computed(() =>
+                      this.service.getDescription(this.resourceId()));
 }
