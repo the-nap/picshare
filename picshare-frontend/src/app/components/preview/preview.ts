@@ -10,8 +10,8 @@ import { PreviewService } from './preview.service';
   styleUrl: './preview.css',
 })
 
-export class Post {
-  resourceId = input.required<string>();
+export class Preview {
+  readonly resourceId = input.required<string>();
   service = inject(PreviewService);
   resource$ = computed(() =>
                        this.service.getResource(this.resourceId()));

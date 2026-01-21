@@ -1,17 +1,17 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { environment } from "../../environments/environment";
+import { environment } from "../../../environments/environment";
+import { PostModel } from "../../models/post.model";
 
 @Injectable({providedIn: "root"})
 export class PostService {
 
   apiUrl: string = environment.apiUrl + "image/";
+  private http = inject(HttpClient);
 
-  constructor(private http:HttpClient){}
-
-  getResource(id: string): Observable<Blob> {
-    return this.http.get(`${this.apiUrl}blob/` + id, { responseType: 'blob' });
+  getPost(id: number): Observable<PostModel>{
+    return this.http.get<PostModel>(this.apiUrl + id)
   }
 
   getUsername(id: string): Observable<string> {

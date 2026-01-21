@@ -2,6 +2,7 @@ import { Component, computed, inject, input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card'
 import { NgOptimizedImage } from '@angular/common';
 import { PostService } from './post.service';
+import { PostModel } from '../../models/post.model';
 
 @Component({
   selector: 'app-post',
@@ -11,12 +12,14 @@ import { PostService } from './post.service';
 })
 
 export class Post {
-  resourceId = input.required<string>();
+  resourceId = input.required<number>();
   service = inject(PostService);
-  resource$ = computed(() =>
-                      this.service.getResource(this.resourceId()));
-  username$ = computed(() =>
-                      this.service.getUsername(this.resourceId()));
-  description$ = computed(() =>
-                      this.service.getDescription(this.resourceId()));
+
+  post: PostModel;
+
+  ngOnInit(){
+    this.service.getPost(this.resourceId()).subscribe((resource) => {
+                                                   this.post = resource;
+    });
+  }
 }
