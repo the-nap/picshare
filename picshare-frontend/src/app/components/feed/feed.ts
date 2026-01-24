@@ -12,7 +12,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   styleUrl: './feed.css',
 })
 export class Feed {
-  userId = input.required<string>();
+  userId = input<number>(0);
   service = inject(FeedService);
 
   resourceIds$!: Observable<string[]>;

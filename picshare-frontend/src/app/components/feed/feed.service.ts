@@ -9,7 +9,7 @@ export class FeedService {
   apiUrl: string = environment.apiUrl + "feed/";
   private http = inject(HttpClient);
 
-  getFeed(user: string): Observable<string[]>{
+  getFeed(user: number): Observable<string[]>{
     return this.http.get<string[]>(`${this.apiUrl}` + user, { responseType: "json" });
   }
 }

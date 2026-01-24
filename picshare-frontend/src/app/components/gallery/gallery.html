@@ -1,3 +1,6 @@
+@if (postIds() === []){
+  <p>Nothing to see</p>
+}
 <mat-grid-list cols="3">
   @for (postId of postIds(); track postId) {
   <mat-grid-tile>
