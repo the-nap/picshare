@@ -6,10 +6,10 @@ import { environment } from "../../../environments/environment";
 @Injectable({providedIn: 'root'})
 export class PreviewService {
 
-  apiUrl: string = environment.apiUrl + "thumbnail/";
+  apiUrl: string = environment.apiUrl + "post/thumbnail/";
   private http = inject(HttpClient);
 
-  getResource(id: string): Observable<Blob> {
-    return this.http.get(`${this.apiUrl}` + id, { responseType: 'blob' });
+  getResource(id: string): Observable<string> {
+    return this.http.get(`${this.apiUrl}` + id, { responseType: 'text' });
   }
 }
