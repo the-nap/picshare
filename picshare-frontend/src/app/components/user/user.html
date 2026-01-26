@@ -1,1 +1,4 @@
-<p>user works!</p>
+@if( user$ | async; as user){
+
+  <img [ngSrc]="user.avatarUrl">
+  }

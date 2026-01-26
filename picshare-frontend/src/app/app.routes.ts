@@ -27,7 +27,7 @@ export const routes: Routes = [
     component: Search
   },
   {
-    path: 'user',
+    path: 'user/:id',
     title: 'User Profile',
     component: User,
   }
