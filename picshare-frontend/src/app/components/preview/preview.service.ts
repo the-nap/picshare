@@ -10,6 +10,10 @@ export class PreviewService {
   private http = inject(HttpClient);
 
   getResource(id: string): Observable<string> {
-    return this.http.get(`${this.apiUrl}` + id, { responseType: 'text' });
+    return this.http.get(this.apiUrl + id, { responseType: 'text' });
+  }
+
+  getByTag(tag: string): Observable<string[]> {
+    return this.http.get<string[]>(this.apiUrl + tag, { responseType: 'json' })
   }
 }
