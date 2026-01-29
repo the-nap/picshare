@@ -1,31 +1,38 @@
-import { AsyncPipe, NgOptimizedImage } from '@angular/common';
-import { Component, effect, inject, input } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
+import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserModel } from '../../models/user.model';
-import { map, Observable } from 'rxjs';
+import { EMPTY } from 'rxjs';
 import { UserService } from './user.service';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-user',
-  imports: [NgOptimizedImage, AsyncPipe],
+  imports: [NgOptimizedImage, MatProgressSpinnerModule],
   templateUrl: './user.html',
   styleUrl: './user.css',
 })
 
 export class User {
 
-  user$!: Observable<UserModel>;
+  userId = signal<number | undefined>(undefined);
 
   service = inject(UserService);
+  route = inject(ActivatedRoute);
 
-  constructor(private route: ActivatedRoute){}
-
-  ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      const id: number = Number(params.get('id'))
-      if(!isNaN(id)){
-        this.user$ = this.service.getUser(id);
-      }
+  constructor() {
+    this.route.params.subscribe((params) => {
+      this.userId.set(params['id']);
     });
   }
+
+  user = rxResource<UserModel | undefined, number | undefined>({
+    params: () => ( this.userId() ),
+    stream: ({params}) => {
+      if(!params)
+        return EMPTY;
+      return this.service.getUser(params);
+    }
+  });
 }
