@@ -9,7 +9,7 @@ export class PreviewService {
   apiUrl: string = environment.apiUrl + "post/thumbnail/";
   private http = inject(HttpClient);
 
-  getResource(id: string): Observable<string> {
+  getResource(id: number): Observable<string> {
     return this.http.get(this.apiUrl + id, { responseType: 'text' });
   }
 

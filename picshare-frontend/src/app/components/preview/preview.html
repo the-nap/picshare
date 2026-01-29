@@ -1,3 +1,7 @@
 <mat-card appearance="outlined">
-  <img mat-card-image [ngSrc]="resource$()">
+  @if ( preview.isLoading() ){
+  <mat-progress-spinner />
+    } @else if ( preview.hasValue() ){
+  <img mat-card-image [ngSrc]="preview.value()">
+  }
 </mat-card>

@@ -1,13 +1,12 @@
-import { Component, effect, inject, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { Gallery } from '../gallery/gallery';
 import { FeedService } from './feed.service';
-import { AsyncPipe } from '@angular/common';
-import { Observable } from 'rxjs';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-feed',
-  imports: [Gallery, AsyncPipe, MatProgressSpinnerModule],
+  imports: [Gallery, MatProgressSpinnerModule],
   templateUrl: './feed.html',
   styleUrl: './feed.css',
 })
@@ -15,12 +14,13 @@ export class Feed {
   userId = input.required<number>();
   service = inject(FeedService);
 
-  resourceIds$!: Observable<string[]>;
+  images = rxResource<string[], number>({
+    params: () => ( this.userId() ),
+    stream: ({params}) => {
+      return this.service.getFeed(params)
+    },
+  });
 
-  constructor() {
-    effect(() => {
-      this.resourceIds$ = this.service.getFeed(this.userId())
-    });
-  }
+
 
 }
