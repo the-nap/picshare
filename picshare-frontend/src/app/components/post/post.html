@@ -1,17 +1,19 @@
 <mat-card class="card" appearance="outlined">
-@if ( post$ | async; as post) {
+  @if ( post.isLoading() ) {
+  <mat-spinner />
+  } @else if ( post.hasValue() ){
   <mat-card-header>
-    @if ( user$ | async; as user){
+    @if ( user.isLoading() ){
+      <mat-spinner />
+    } @else if(user.hasValue()) {
       <ng-container>
-        <img mat-card-avatar [ngSrc]="user.avatarUrl">
-        <mat-card-title>{{ user.username }}</mat-card-title>
-      </ng-container>
+        <img mat-card-avatar [ngSrc]="user.value().avatarUrl">
+        <mat-card-title>{{ user.value().username }}</mat-card-title>
+        </ng-container>
     }
   </mat-card-header>
-    <img mat-card-image [ngSrc]="post.imageUrl">
+    <img mat-card-image [ngSrc]="post.value().imageUrl">
     <mat-card-content>
-    <p>{{ post.description }}</p>
+    <p>{{ post.value().description }}</p>
     </mat-card-content>
-}@else {
-  <mat-spinner></mat-spinner>
-}
+  }

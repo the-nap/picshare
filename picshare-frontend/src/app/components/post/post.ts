@@ -1,12 +1,12 @@
-import { Component, effect, inject, input } from '@angular/core';
+import { Component, computed, effect, inject, input, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card'
 import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { PostService } from './post.service';
-import { PostModel } from '../../models/post.model';
-import { Observable, switchMap } from 'rxjs';
-import { UserModel } from '../../models/user.model';
-import { UserService } from '../user/user.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { EMPTY, Observable, switchMap } from 'rxjs';
+import { UserModel } from '../../models/user.model';
+import { PostModel } from '../../models/post.model';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-post',
@@ -15,21 +15,25 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
   styleUrl: './post.css',
 })
 
-export class Post {
-  postService = inject(PostService);
-  userService = inject(UserService);
+export class Post{
+  private postService = inject(PostService);
 
   resourceId = input.required<number>();
 
-  post$!: Observable<PostModel>;
-  user$!: Observable<UserModel>;
+  post = rxResource<PostModel, number>({
+    params: () => ( this.resourceId() ),
+    stream: ({params}) => {
+      return this.postService.getPost(params);
+    }
+  });
 
-  constructor() {
-    effect(() => {
-      this.post$ = this.postService.getPost(this.resourceId())
-    });
-    this.user$ = this.post$.pipe(
-      switchMap(post => this.userService.getUser(post.userId))
-    );
-  }
+  user = rxResource<UserModel, PostModel | undefined>({
+    params: () => ( this.post.value() ),
+    stream: ({params}) => {
+      if (!params) {
+        return EMPTY;
+      }
+      return this.postService.getUser(params.userId);
+    }
+  });
 }
