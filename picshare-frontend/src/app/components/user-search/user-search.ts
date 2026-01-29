@@ -1,14 +1,15 @@
-import { Component, effect, inject, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { RouterLink } from '@angular/router';
 import { UserService } from '../user/user.service';
 import { UserModel } from '../../models/user.model';
-import { Observable } from 'rxjs';
-import { AsyncPipe, NgOptimizedImage } from '@angular/common';
+import { EMPTY } from 'rxjs';
+import { NgOptimizedImage } from '@angular/common';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-user-search',
-  imports: [MatListModule, RouterLink, AsyncPipe, NgOptimizedImage],
+  imports: [MatListModule, RouterLink, NgOptimizedImage],
   templateUrl: './user-search.html',
   styleUrl: './user-search.css',
 })
@@ -16,15 +17,16 @@ import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 export class UserSearch {
 
   service = inject(UserService);
-  users$!: Observable<UserModel[]>
 
   username = input.required<string>();
 
-  constructor() {
-    effect(() => {
-      this.users$ = this.service.getByUsername(this.username());
-    });
-  }
-
-
+  users = rxResource<UserModel[], string> ({
+    params: () => ( this.username() ),
+    stream: ({params}) => {
+      if(!params){
+        return EMPTY;
+      }
+      return this.service.getByUsername(params)
+    }
+  });
 }

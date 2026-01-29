@@ -1,6 +1,6 @@
 <mat-nav-list>
-  @if ( users$ | async; as users ) {
-    @for ( user of users; track user ) {
+  @if ( users.hasValue() ) {
+    @for ( user of users.value(); track user ) {
     <a
       mat-list-item
       [routerLink]="['/user', user.id]"
