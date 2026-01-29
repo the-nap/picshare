@@ -1,16 +1,16 @@
-import { Component, computed, effect, inject, input, OnInit } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card'
-import { AsyncPipe, NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { PostService } from './post.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
-import { EMPTY, Observable, switchMap } from 'rxjs';
+import { EMPTY } from 'rxjs';
 import { UserModel } from '../../models/user.model';
 import { PostModel } from '../../models/post.model';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-post',
-  imports: [MatCardModule, MatProgressSpinnerModule, NgOptimizedImage, AsyncPipe],
+  imports: [MatCardModule, MatProgressSpinnerModule, NgOptimizedImage],
   templateUrl: './post.html',
   styleUrl: './post.css',
 })

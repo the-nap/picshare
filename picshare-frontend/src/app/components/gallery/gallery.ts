@@ -9,6 +9,6 @@ import { MatGridListModule } from '@angular/material/grid-list'
   styleUrl: './gallery.css',
 })
 export class Gallery {
-  postIds = input.required<string[]>();
+  postIds = input.required<number[]>();
 
 }
