@@ -13,7 +13,7 @@ export class PreviewService {
     return this.http.get(this.apiUrl + id, { responseType: 'text' });
   }
 
-  getByTag(tag: string): Observable<string[]> {
-    return this.http.get<string[]>(this.apiUrl + tag, { responseType: 'json' })
+  getByTag(tag: string): Observable<number[]> {
+    return this.http.get<number[]>(this.apiUrl + tag, { responseType: 'json' })
   }
 }

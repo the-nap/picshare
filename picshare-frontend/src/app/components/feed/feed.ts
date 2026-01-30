@@ -14,7 +14,7 @@ export class Feed {
   userId = input.required<number>();
   service = inject(FeedService);
 
-  images = rxResource<string[], number>({
+  images = rxResource<number[], number>({
     params: () => ( this.userId() ),
     stream: ({params}) => {
       return this.service.getFeed(params)
