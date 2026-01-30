@@ -1,5 +1,7 @@
-@if( postIds$ | async; as postIds ){
+@if( postIds.isLoading() ){
+} @else if ( postIds.hasValue() ){
+  <app-gallery [postIds]="postIds.value()"/>
+}
 
-<app-gallery [postIds]="postIds"/>
 
-  }
+
