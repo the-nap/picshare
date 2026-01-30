@@ -20,13 +20,16 @@ export class UserSearch {
 
   username = input.required<string>();
 
-  users = rxResource<UserModel[], string> ({
-    params: () => ( this.username() ),
+  users = rxResource<UserModel[], string | null> ({
+    params: () => {
+      const value = this.username().trim();
+      return value.length <= 2 ? null : value;
+    },
     stream: ({params}) => {
-      if(!params){
+      if(params === null){
         return EMPTY;
       }
-      return this.service.getByUsername(params)
+      return this.service.getByUsername(params);
     }
   });
 }

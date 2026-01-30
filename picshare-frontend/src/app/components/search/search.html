@@ -1,1 +1,17 @@
-<input type="text" name="searchInput" value="">
+<div class="form">
+  <mat-form-field class="mat-form">
+    <mat-label>Search</mat-label>
+    <input matInput type="text" [(ngModel)]="toSearch">
+  </mat-form-field>
+</div>
+<mat-tab-group>
+  <mat-tab label="Users">
+    <ng-template matTabContent>
+      <app-user-search [username]="toSearch"/>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Tags">
+    <ng-template matTabContent>
+      <app-tag-search [tag]="toSearch"/>
+    </ng-template>
+  </mat-tab>
