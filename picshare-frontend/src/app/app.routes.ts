@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuardFn } from '@auth0/auth0-angular';
 import { Feed } from './components/feed/feed';
 import { Search } from './components/search/search';
 import { User } from './components/user/user';
@@ -19,16 +20,19 @@ export const routes: Routes = [
   {
     path: 'feed',
     title: 'Personal Feed',
-    component: Feed
+    component: Feed,
+    canActivate: [authGuardFn]
   },
   {
     path: 'search',
     title: 'Search Pics',
-    component: Search
+    component: Search,
+    canActivate: [authGuardFn]
   },
   {
     path: 'user/:id',
     title: 'User Profile',
     component: User,
+    canActivate: [authGuardFn]
   }
 ];
