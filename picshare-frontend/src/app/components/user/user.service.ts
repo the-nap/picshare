@@ -9,7 +9,7 @@ export class UserService {
   private http = inject(HttpClient)
   private apiUrl =  environment.apiUrl + 'user/';
 
-  getUser(id: number): Observable<UserModel> {
+  getUser(id: string): Observable<UserModel> {
     return this.http.get<UserModel>(this.apiUrl + id);
   }
 

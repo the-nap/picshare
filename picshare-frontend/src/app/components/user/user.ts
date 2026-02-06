@@ -2,10 +2,11 @@ import { NgOptimizedImage } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserModel } from '../../models/user.model';
-import { EMPTY } from 'rxjs';
+import { EMPTY, of, switchMap } from 'rxjs';
 import { UserService } from './user.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-user',
@@ -16,23 +17,19 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 export class User {
 
-  userId = signal<number | undefined>(undefined);
-
   service = inject(UserService);
-  route = inject(ActivatedRoute);
+  authService = inject(AuthService);
 
-  constructor() {
-    this.route.params.subscribe((params) => {
-      this.userId.set(params['id']);
-    });
-  }
-
-  user = rxResource<UserModel | undefined, number | undefined>({
-    params: () => ( this.userId() ),
-    stream: ({params}) => {
-      if(!params)
-        return EMPTY;
-      return this.service.getUser(params);
-    }
+  user = rxResource<UserModel | undefined, string | null>({
+    params: () => null,
+    stream: () => {
+      return this.authService.user$.pipe(
+        switchMap(user => {
+          if ( !user || !user.sub )
+            return of(undefined);
+          return this.service.getUser(user.sub);
+        })
+      );
+    },
   });
 }
