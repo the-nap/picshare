@@ -1,7 +1,7 @@
 import { Component, inject, input } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { RouterLink } from '@angular/router';
-import { UserService } from '../user/user.service';
+import { UserService } from './user.service';
 import { UserModel } from '../../models/user.model';
 import { EMPTY } from 'rxjs';
 import { NgOptimizedImage } from '@angular/common';

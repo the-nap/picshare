@@ -13,6 +13,6 @@ export class Navbar {
   links = [
     { label: 'Feed', route: '/feed' },
     { label: 'Search', route: '/search' },
-    { label: 'Profile', route: '/user' }
+    { label: 'Profile', route: '/profile' }
   ]
 }

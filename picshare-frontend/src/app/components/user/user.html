@@ -1,5 +1,0 @@
-@if ( user.isLoading() ) {
-  <mat-progress-spinner />
-} @else if ( user.hasValue() ){
-  <img [ngSrc]="user.value().avatarUrl">
-}

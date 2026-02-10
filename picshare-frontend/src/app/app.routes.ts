@@ -2,18 +2,18 @@ import { Routes } from '@angular/router';
 import { authGuardFn } from '@auth0/auth0-angular';
 import { Feed } from './components/feed/feed';
 import { Search } from './components/search/search';
-import { User } from './components/user/user';
+import { Profile } from './components/profile/profile';
 import { Home } from './components/home/home';
 
 export const routes: Routes = [
 
   {
     path: '',
-    redirectTo: '/home',
+    redirectTo: '/feed',
     pathMatch: 'full'
   },
   {
-    path: 'home',
+    path: 'login',
     title: 'Homepage',
     component: Home,
   },
@@ -30,9 +30,9 @@ export const routes: Routes = [
     canActivate: [authGuardFn]
   },
   {
-    path: 'user/:id',
+    path: 'profile',
     title: 'User Profile',
-    component: User,
+    component: Profile,
     canActivate: [authGuardFn]
   }
 ];

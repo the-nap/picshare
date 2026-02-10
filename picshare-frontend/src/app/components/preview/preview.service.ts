@@ -6,7 +6,7 @@ import { environment } from "../../../environments/environment";
 @Injectable({providedIn: 'root'})
 export class PreviewService {
 
-  apiUrl: string = environment.apiUrl + "post/thumbnail/";
+  apiUrl: string = environment.api.serverUrl + "post/thumbnail/";
   private http = inject(HttpClient);
 
   getResource(id: number): Observable<string> {

@@ -7,7 +7,7 @@ import { Observable } from "rxjs";
 @Injectable({ providedIn: 'root' })
 export class UserService {
   private http = inject(HttpClient)
-  private apiUrl =  environment.apiUrl + 'user/';
+  private apiUrl =  environment.api.serverUrl + 'user/';
 
   getUser(id: string): Observable<UserModel> {
     return this.http.get<UserModel>(this.apiUrl + id);

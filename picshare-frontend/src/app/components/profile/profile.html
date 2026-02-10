@@ -1,0 +1,14 @@
+@if ( user.isLoading() ) {
+  <mat-progress-spinner />
+} @else if ( user.hasValue() ){
+  <div class="user-data">
+    <span class="user-component-1"><img [ngSrc]="user.value().avatarUrl"></span>
+    <span class="user-component-2"><h3>{{ user.value().username }}</h3></span>
+    <span class="user-component-3"><p>{{ user.value().bio }}</p></span>
+  </div>
+  @if ( posts.hasValue() ) {
+  <app-gallery [postIds]="posts.value()"/>
+  }@else {
+    <mat-progress-spinner />
+  }
+}
