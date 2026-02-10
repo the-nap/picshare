@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({providedIn: 'root',})
 export class FeedService {
 
-  apiUrl: string = environment.apiUrl + "feed/";
+  apiUrl: string = environment.api.serverUrl + "feed/";
   private http = inject(HttpClient);
 
   getFeed(user: string): Observable<number[]>{
