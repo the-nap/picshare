@@ -2,7 +2,7 @@ import { NgOptimizedImage } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { UserModel } from '../../models/user.model';
 import { of, switchMap } from 'rxjs';
-import { UserService } from './profile.service';
+import { UserService } from '../user-search/user.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthService, User } from '@auth0/auth0-angular';

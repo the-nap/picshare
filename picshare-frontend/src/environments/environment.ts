@@ -1,15 +1,27 @@
+import config from '../../auth_config.json';
+
+const { domain, clientId, authorizationParams: { audience }, apiUri, errorPath } = config as {
+  domain: string;
+  clientId: string;
+  authorizationParams: {
+    audience?: string;
+  },
+  apiUri: string;
+  errorPath: string;
+};
+
 export const environment = {
   production: false,
-  auth0: {
-    domain: 'pic-share.eu.auth0.com',
-    clientId: 'YBVD7lwWqhQa3AtpsOmodZDb13SFAMof',
+  auth: {
+    domain,
+    clientId,
     authorizationParams: {
-      audience: 'https://amoeba-immense-macaw.ngrok-free.app/api',
-      redirect_uri: `http://localhost/4200`,
+      ...(audience && audience !== 'https://amoeba-immense-macaw.ngrok-free.app/api/' ? { audience } : null),
+          redirect_uri: window.location.origin
     },
     errorPath: '/callback',
   },
-  api: {
-    serverUrl: 'https://amoeba-immense-macaw.ngrok-free.app/api',
+  httpInterceptor: {
+    allowedList: [`${apiUri}/*`],
   },
 };

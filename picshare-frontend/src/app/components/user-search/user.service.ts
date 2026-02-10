@@ -1,19 +1,18 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
-import { environment } from "../../../environments/environment";
 import { UserModel } from "../../models/user.model";
 import { Observable } from "rxjs";
+import config from "../../../../auth_config.json";
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
   private http = inject(HttpClient)
-  private apiUrl =  environment.api.serverUrl + 'user/';
 
   getUser(id: string): Observable<UserModel> {
-    return this.http.get<UserModel>(this.apiUrl + id);
+    return this.http.get<UserModel>(`${config.apiUri}/user/${id}`);
   }
 
   getByUsername(username: string): Observable<UserModel[]> {
-    return this.http.get<UserModel[]>(this.apiUrl + username);
+    return this.http.get<UserModel[]>(`${config.apiUri}/user/name/${username}`);
   }
 }
