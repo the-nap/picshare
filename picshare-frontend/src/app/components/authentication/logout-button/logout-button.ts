@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
+import Keycloak from 'keycloak-js';
 
 @Component({
   selector: 'app-logout-button',
@@ -8,13 +8,9 @@ import { AuthService } from '@auth0/auth0-angular';
   `
 })
 export class LogoutButton {
-  private auth = inject(AuthService);
+  private readonly keycloak = inject(Keycloak);
 
   logout(): void {
-    this.auth.logout({
-      logoutParams: {
-        returnTo: window.location.origin
-      }
-    });
+    this.keycloak.logout();
   }
 }

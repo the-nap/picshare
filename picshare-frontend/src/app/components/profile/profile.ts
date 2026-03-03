@@ -5,6 +5,7 @@ import { of, switchMap } from 'rxjs';
 import { UserService } from '../user-search/user.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+//ToDo remove auth0
 import { AuthService, User } from '@auth0/auth0-angular';
 import { Gallery } from '../gallery/gallery';
 import { PostService } from '../post/post.service';

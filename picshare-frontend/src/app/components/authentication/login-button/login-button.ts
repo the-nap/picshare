@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
+import Keycloak from 'keycloak-js';
 
 @Component({
   selector: 'app-login-button',
@@ -9,9 +9,10 @@ import { AuthService } from '@auth0/auth0-angular';
 })
 
 export class LoginButton{
-  private auth = inject(AuthService);
+  private keycloak = inject(Keycloak)
 
-  loginWithRedirect(): void {
-    this.auth.loginWithRedirect();
+  login() {
+    this.keycloak.login();
   }
+
 }

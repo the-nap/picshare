@@ -1,33 +1,24 @@
-@if (auth.isAuthenticated$ | async) {
+@if ( authenticated() ) {
   <app-navbar />
 } @else {
   <div class="app-container">
-    <!-- Loading State -->
-    @if (auth.isLoading$ | async) {
-      <div class="loading-state">
-        <div class="loading-text">Loading...</div>
-        </div>
-    }
 
   <!-- Error State -->
-    @if (auth.error$ | async; as error) {
+    @if (keycloakStatus() === 'AuthError') {
       <div class="error-state">
         <div class="error-title">Oops!</div>
         <div class="error-message">Something went wrong</div>
-        <div class="error-sub-message">{{ error.message }}</div>
         </div>
     }
 
-
   <!-- Main Content -->
-
-    @if (!(auth.isLoading$ | async) && !(auth.error$ | async)) {
+    @if (!(keycloakStatus() === 'AuthError')) {
       <div class="app-container">
         <div class="main-card-wrapper">
         <img
         src="https://cdn.auth0.com/quantum-assets/dist/latest/logos/auth0/auth0-lockup-en-ondark.png"
-        alt="Auth0 Logo"
-        class="auth0-logo"
+        alt="Picshare Logo"
+        class="logo"
         />
         <h1 class="main-title">PicShare</h1>
         <!-- Unauthenticated State -->

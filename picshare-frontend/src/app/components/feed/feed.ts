@@ -14,8 +14,8 @@ import { of, switchMap } from 'rxjs';
 })
 export class Feed {
   feedService = inject(FeedService);
-  auth = inject(AuthService);
 
+  //ToDo remove auth0 reference
   images = rxResource<number[], User | null>({
     params: () => null,
     stream: () => {

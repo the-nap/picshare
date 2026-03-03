@@ -81,7 +81,7 @@ body {
   animation: fadeInScale 0.8s ease-out forwards;
 }
 
-.auth0-logo {
+.logo {
   width: 160px;
   margin-bottom: 1.5rem;
   opacity: 0;
@@ -211,7 +211,7 @@ body {
     font-size: 1.1rem;
   }
 
-  .auth0-logo {
+  .logo {
     width: 120px;
   }
 }
