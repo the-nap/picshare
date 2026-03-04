@@ -1,10 +1,10 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Gallery } from '../gallery/gallery';
 import { FeedService } from './feed.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { AuthService, User } from '@auth0/auth0-angular';
-import { of, switchMap } from 'rxjs';
+import Keycloak from 'keycloak-js';
+import { from, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-feed',
@@ -14,18 +14,13 @@ import { of, switchMap } from 'rxjs';
 })
 export class Feed {
   feedService = inject(FeedService);
+  private readonly keycloak = inject(Keycloak);
 
-  //ToDo remove auth0 reference
-  images = rxResource<number[], User | null>({
-    params: () => null,
+  images = rxResource({
     stream: () => {
-      return this.auth.user$.pipe(
-        switchMap(user => {
-          if ( !user || !user.sub )
-            return of([]);
-          return this.feedService.getFeed(user.sub);
-        })
-      );
-    },
+      return from(this.keycloak.loadUserInfo())
+        .pipe(
+          switchMap(({ sub }) => this.feedService.getFeed(sub)));
+    }
   });
 }

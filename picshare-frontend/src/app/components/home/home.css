@@ -82,8 +82,7 @@ body {
 }
 
 .logo {
-  width: 160px;
-  margin-bottom: 1.5rem;
+  width: 400px;
   opacity: 0;
   animation: slideInDown 1s ease-out forwards 0.2s;
 }
@@ -212,6 +211,6 @@ body {
   }
 
   .logo {
-    width: 120px;
+    width: 240px;
   }
 }

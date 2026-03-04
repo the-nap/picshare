@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import config from '../../../../auth_config.json';
+import { environment } from '../../../environments/environment';
 
 @Injectable({providedIn: 'root',})
 export class FeedService {
@@ -9,6 +9,6 @@ export class FeedService {
   private http = inject(HttpClient);
 
   getFeed(user: string): Observable<number[]>{
-    return this.http.get<number[]>(`${config.apiUri}/feed/${user}`,{ responseType: "json" });
+    return this.http.get<number[]>(`${environment.apiUrl}/feed/${user}`,{ responseType: "json" });
   }
 }

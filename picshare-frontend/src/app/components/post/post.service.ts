@@ -5,7 +5,6 @@ import { environment } from "../../../environments/environment";
 import { PostModel } from "../../models/post.model";
 import { UserModel } from "../../models/user.model";
 import { UserService } from "../user-search/user.service";
-import config from '../../../../auth_config.json'
 
 @Injectable({providedIn: "root"})
 export class PostService {
@@ -14,7 +13,7 @@ export class PostService {
   private userService = inject(UserService)
 
   getPost(id: number): Observable<PostModel>{
-    return this.http.get<PostModel>(`${config.apiUri}/post/media/${id}`)
+    return this.http.get<PostModel>(`${environment.apiUrl}/post/media/${id}`)
   }
 
   getUser(id: string): Observable<UserModel>{
@@ -22,6 +21,6 @@ export class PostService {
   }
 
   getPostByUser(id: string): Observable<number[]>{
-    return this.http.get<number[]>(`${config.apiUri}/posts/${id}`);
+    return this.http.get<number[]>(`${environment.apiUrl}/posts/${id}`);
   }
 }
