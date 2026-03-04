@@ -2,10 +2,11 @@ import { Component, computed, inject} from '@angular/core';
 import { LoginButton } from '../authentication/login-button/login-button';
 import { Navbar } from '../navbar/navbar';
 import { KEYCLOAK_EVENT_SIGNAL, KeycloakEventType, ReadyArgs, typeEventArgs } from 'keycloak-angular';
+import { RegisterButton } from '../authentication/register-button/register-button';
 
 @Component({
   selector: 'app-home',
-  imports: [Navbar, LoginButton],
+  imports: [Navbar, LoginButton, RegisterButton],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

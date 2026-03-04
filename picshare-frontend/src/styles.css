@@ -1,5 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 
+.button.access {
+  background-color: #63b3ed;
+  color: #1a1e27;
+}
+
+.button.access:hover {
+  background-color: #4299e1;
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+}
+
 .button {
   padding: 1.1rem 2.8rem;
   font-size: 1.2rem;
